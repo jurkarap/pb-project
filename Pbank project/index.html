@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="./script/theme.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/highcharts.css">
+    <script src="https://kit.fontawesome.com/d5e00444b6.js" crossorigin="anonymous"></script>
+    <title>Maveric</title>
+</head>
+
+<body>
+    <!--форма new account-->
+    <div class="modal fade" id="newAccountModal" tabindex="-1" aria-labelledby="newAccountLable" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content form-container">
+                <div class="modal-header">
+                    <h5 class="form-title" id="newAccountLable">New account</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="content-center" id="newAccountForm">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <span class="form-lable-title">NAME</span>
+                                </label>
+                                <input type="text" name="name" class="form-control input-bar is-invalid"
+                                    placeholder="PE MAIN ACCOUNT">
+                                <div class="name-input-error-text"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <span class="form-lable-title">TYPE</span>
+                                </label>
+                                <select name="type" class="form-select input-bar">
+                                    <option selected>VISA</option>
+                                    <option>mCard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <span class="form-lable-title">STARTING BALANCE</span>
+                                </label>
+                                <div class="input-group input-group-container">
+                                    <input type="text" name="balance" class="form-control input-group-bar is-invalid"
+                                        placeholder="00,00">
+                                    <select name="currency" class="form-select input-group-select">
+                                        <option selected value="0">USD</option>
+                                        <option value="1">EURO</option>
+                                        <option value="2">UAH</option>
+                                    </select>
+                                    <div class="bal-input-error-text"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <span class="form-lable-title">COLOR</span>
+                                </label>
+                                <div class="input-group input-group-container">
+                                    <select name="color" class="form-select input-group-bar">
+                                        <option selected value="0">ORANGE</option>
+                                        <option value="1">BLUE</option>
+                                        <option value="2">RED</option>
+                                    </select>
+                                    <fieldset class="input-group-disabled" disabled>
+                                        <input type="image" class="form-control image-input"
+                                            src="./img/square-fill.svg">
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons-container mt-5 text-end">
+                            <button class="btn form-button-cancel text-center p-0" href="#" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close">
+                                <span class="new-transaction-button-text">Cancel</span>
+                            </button>
+                            <button name="saveButton" type="submit"
+                                class="form-button-save js-add-slide text-center p-0">
+                                <span class="new-transaction-button-text">Save</span>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--форма new transaction-->
+    <div class="modal fade" id="newTransactionModal" tabindex="-1" aria-labelledby="newTransactionLable"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content form-container">
+                <div class="modal-header flex-column align-items-start p-1">
+                    <h4 class="form-title p-2" id="newTransactionLable">New transaction</h4>
+                    <div class="container-fluid text-center mt-3">
+                        <a class="transaction-form-button" href="#" id="revenueButton" role="button">+ Revenue</a>
+                        <a class="transaction-form-button" href="#" id="expenseButton" role="button">- Expense</a>
+                        <a class="transaction-form-button" href="#" id="transferButton" role="button"> Transfer</a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="revenue not-active">
+                        <form role="form" class="content-center" id="transactionRevenueForm">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">ACCOUNT</span>
+                                    </label>
+                                    <select name="account" class="form-select input-bar">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">AMOUNT</span>
+                                    </label>
+                                    <div class="input-group input-group-container">
+                                        <input type="text" name="balance" class="form-control input-group-bar"
+                                            placeholder="00,00">
+                                        <select name="currency" class="form-select input-group-select">
+                                            <option selected value="usd">USD</option>
+                                            <option value="euro">EURO</option>
+                                            <option value="uah">UAH</option>
+                                        </select>
+                                        <div class="textError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center new-transaction-small-container pt-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">CATEGORY</span>
+                                    </label>
+                                    <select name="сategory" class="form-select input-bar">
+                                        <option selected value="taxes">Taxes</option>
+                                        <option value="salary">salary</option>
+                                        <option value="present">present</option>
+                                        <option value="debt">debt</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">DATE</span>
+                                    </label>
+                                    <input type="date" name="date" class="form-control input-bar">
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">PROJECT</span>
+                                    </label>
+                                    <select name="project" class="form-select input-bar">
+                                        <option selected value="project 1">project 1</option>
+                                        <option value="project 2">project 2</option>
+                                        <option value="project 3">project 3</option>
+                                        <option value="project 4">project 4</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">Counterparty</span>
+                                    </label>
+                                    <select name="counterparty" class="form-select input-bar">
+                                        <option selected value="Counterparty 1">Counterparty 1</option>
+                                        <option value="Counterparty 2">Counterparty 2</option>
+                                        <option value="Counterparty 3">Counterparty 3</option>
+                                        <option value="Counterparty 4">Counterparty 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="container-fluid g-0 pt-4">
+                                <label class="form-label">
+                                    <span class="form-lable-title">COMMENT</span>
+                                </label>
+                                <div class="form-floating p-0">
+                                    <textarea class="form-control comment-bar" name="comment"
+                                        placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                    <label class="comment-area-title" for="floatingTextarea">Write your comment
+                                        here</label>
+                                </div>
+                            </div>
+                            <div class="form-buttons-container mt-5 text-end">
+                                <button class="btn form-button-cancel text-center p-0" href="#" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <span class="new-transaction-button-text">Cancel</span>
+                                </button>
+                                <button name="saveButton" type="submit" class="form-button-save text-center p-0">
+                                    <span class="new-transaction-button-text">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="expense now-active visibly">
+                        <form role="form" class="content-center" id="transactionExpenseForm">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">ACCOUNT</span>
+                                    </label>
+                                    <select name="account" class="form-select input-bar">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">AMOUNT</span>
+                                    </label>
+                                    <div class="input-group input-group-container">
+                                        <input type="text" name="balance" class="form-control input-group-bar"
+                                            placeholder="00,00">
+                                        <select name="currency" class="form-select input-group-select">
+                                            <option selected value="usd">USD</option>
+                                            <option value="euro">EURO</option>
+                                            <option value="uah">UAH</option>
+                                        </select>
+                                        <div class="textError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center new-transaction-small-container pt-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">CATEGORY</span>
+                                    </label>
+                                    <select name="сategory" class="form-select input-bar">
+                                        <option selected value="taxes">Taxes</option>
+                                        <option value="salary">salary</option>
+                                        <option value="present">present</option>
+                                        <option value="debt">debt</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">DATE</span>
+                                    </label>
+                                    <input type="date" name="date" class="form-control input-bar">
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">PROJECT</span>
+                                    </label>
+                                    <select name="project" class="form-select input-bar">
+                                        <option selected value="project 1">project 1</option>
+                                        <option value="project 2">project 2</option>
+                                        <option value="project 3">project 3</option>
+                                        <option value="project 4">project 4</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">Counterparty</span>
+                                    </label>
+                                    <select name="counterparty" class="form-select input-bar">
+                                        <option selected value="Counterparty 1">Counterparty 1</option>
+                                        <option value="Counterparty 2">Counterparty 2</option>
+                                        <option value="Counterparty 3">Counterparty 3</option>
+                                        <option value="Counterparty 4">Counterparty 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="container-fluid g-0 pt-3">
+                                <label class="form-label">
+                                    <span class="form-lable-title">COMMENT</span>
+                                </label>
+                                <div class="form-floating">
+                                    <textarea class="form-control comment-bar" name="comment"
+                                        placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                    <label class="comment-area-title" for="floatingTextarea">Write your comment
+                                        here</label>
+                                </div>
+                            </div>
+                            <div class="form-buttons-container mt-5 text-end">
+                                <button class="btn form-button-cancel text-center p-0" href="#" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <span class="new-transaction-button-text">Cancel</span>
+                                </button>
+                                <button name="saveButton" type="submit" class="form-button-save text-center p-0">
+                                    <span class="new-transaction-button-text">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="transfer not-active">
+                        <form role="form" class="content-center" id="transactionTransferForm">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">ACCOUNT (SENDER)</span>
+                                    </label>
+                                    <select name="type" class="form-select input-bar">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">ACCOUNT (RECEPIENT)</span>
+                                    </label>
+                                    <select name="type" class="form-select input-bar">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">AMOUNT</span>
+                                    </label>
+                                    <div class="input-group input-group-container">
+                                        <input type="text" name="revenueBalance" class="form-control input-group-bar"
+                                            placeholder="00,00">
+                                        <select name="revenueCurrency" class="form-select input-group-select">
+                                            <option selected value="0">USD</option>
+                                            <option value="1">EURO</option>
+                                            <option value="2">UAH</option>
+                                        </select>
+                                        <div class="bal-input-error-text"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <span class="form-lable-title">DATE</span>
+                                    </label>
+                                    <input type="date" class="form-control input-bar">
+                                </div>
+                            </div>
+                            <div class="container-fluid g-0 pt-4">
+                                <label class="form-label">
+                                    <span class="form-lable-title">COMMENT</span>
+                                </label>
+                                <div class="form-floating p-0">
+                                    <textarea class="form-control comment-bar" placeholder="Leave a comment here"
+                                        id="floatingTextarea"></textarea>
+                                    <label class="comment-area-title" for="floatingTextarea">Write your comment
+                                        here</label>
+                                </div>
+                            </div>
+                            <div class="form-buttons-container mt-5 text-end">
+                                <button class="btn form-button-cancel text-center p-0" href="#" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <span class="new-transaction-button-text">Cancel</span>
+                                </button>
+                                <button name="saveButton" type="submit" class="form-button-save text-center p-0">
+                                    <span class="new-transaction-button-text">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--firebase auth-->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLable"
+    aria-hidden="true">|
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="firebaseui-auth-container"></div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <div class="container-fluid position-relative g-0">
+        <div class="col">
+            <div class="container-fluid main">
+                <header>
+                    <div class="container-fluid gx-4">
+                        <div class="row">
+                            <div class="col-9">
+                                <nav class="navbar navbar-expand-sm">
+                                    <div class="container-fluid g-0">
+                                        <a class="navbar-brand" href="#">
+                                            <span class="navbar-header-title">Maveric</span>
+                                        </a>
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#navbarSupportedContent"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse justify-content-end"
+                                            id="navbarSupportedContent">
+                                            <ul class="nav">
+                                                <li class="nav-item d-none d-lg-block">
+                                                    <a class="nav-link active" href="#">
+                                                        <span class="navbar-header-item">Dashboard</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item d-none d-lg-block">
+                                                    <a class="nav-link" href="#">
+                                                        <span class="navbar-header-item">Analytics</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item d-none d-lg-block">
+                                                    <a class="nav-link" href="#">
+                                                        <span class="navbar-header-item">Reports</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item d-none d-lg-block">
+                                                    <a class="nav-link" href="#">
+                                                        <span class="navbar-header-item">Services</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item d-none d-lg-block">
+                                                    <a class="nav-link" href="#">
+                                                        <span class="navbar-header-item">Templates</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="col-3">
+                                <ul class="nav justify-content-end drops">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="navbar-dropdown-name">Sign in</span>
+                                            </br>
+                                            <span class="navbar-dropdown-mail"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item sign-in" href="#" data-bs-toggle="modal" data-bs-target="#authModal" role="button">Sign out</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item disabled sign-in-status" href="#">Signed in</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="container-fluid my-2 g-0 pb-2 cards-block">
+                    <div class="row mb-3">
+                        <div class="col-md-6 d-none d-xl-block">
+                            <span class="navbar-header-title">Cards and accounts</span>
+                        </div>
+                        <div class="col-md-6 text-end d-none d-xl-block">
+                            <a class="btn new-transaction-button" href="#" data-bs-toggle="modal"
+                                data-bs-target="#newTransactionModal" role="button">
+                                <span class="new-transaction-button-text">+ New transaction</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3 d-none d-xl-block">
+                            <div class="text-end mb-2">
+                                <span class="date-and-time">23.08.2020 16:40</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-1">
+                                    <div class="blue-border-container"><span class="founds-item">Available funds</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-end founds-total-quantity">$ 53573.00</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-1">
+                                    <div class="aquamarine-border-container"><span class="founds-item">Revenue</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-end founds-quantity pt-1">$ 500.00</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="orange-border-container"><span class="founds-item">Expences</span></div>
+                                </div>
+                                <div class="col-6 text-end founds-quantity pt-1">$ 250.00</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-md-12 p-1">
+                            <div class="container-fluid p-0">
+                                <div class="row justify-content-evenly">
+                                    <div class="col-md-7 col-lg-7 col-xl-9 g-0">
+                                        <div class="row slider mx-2" id="cardElement">
+                                            <div>
+                                                <div class="first-card">
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <div class="card-name">PE MAIN ACCOUNT</div>
+                                                        </div>
+                                                        <div class="col-4 text-end">
+                                                            <div class="card-type">VISA</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-money-quantity text-end">$ 500,32</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="col-md-5 col-lg-5 col-xl-3 new-card text-center pt-2 d-none d-md-block"
+                                        href="#" data-bs-toggle="modal" data-bs-target="#newAccountModal" role="button">
+                                        <span class="new-card-plus">+</span>
+                                        </br>
+                                        <span class="new-card-add">Add new account</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid py-3 g-0 main-chart-block ">
+                    <div id="container"></div>
+                </div>
+                <div class="container-fluid go-premium-block p-3 mb-3" id="goPremiumBlock">
+                    <div class="row">
+                        <div class="col-11">
+                            <span class="go-premium-title">GO PREMIUM</span>
+                            </br>
+                            <span class="go-premium-item">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Natus, est.</span>
+                        </div>
+                        <div class="col-1 g-0">
+                            <div class="text-end g-0">
+                                <a class="btn" href="#" role="button" id="closeButton">
+                                    <i class="fas fa-times" style="color: #797B84;"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="navbar-header-title">Transactions</span>
+                        </div>
+                        <div class="col-6 text-end">
+                            <span class="transactions-date">08.08.2020 - 24.09.2020 </span>
+                            <i class="fas fa-calendar-alt" style="color: #00D4E3;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid g-0 mb-3">
+                    <div class="row g-0 overflow-auto justify-content-between flex-nowrap">
+                        <div class="col-2 small-chart-widget">
+                            <div id="ChartOneContainer" class=""></div>
+                        </div>
+                        <div class="col-2 small-chart-widget">
+                            <div id="ChartOneContainer2" class=""></div>
+                        </div>
+                        <div class="col-2 small-chart-widget">
+                            <div id="ChartOneContainer3" class=""></div>
+                        </div>
+                        <div class="col-2 small-chart-widget">
+                            <div id="ChartOneContainer4" class=""></div>
+                        </div>
+                        <div class="col-2 small-chart-widget">
+                            <div id="ChartOneContainer5" class=""></div>
+                        </div>
+                        <a class="col-2 new-widget text-center pt-2" href="#" role="button">
+                            <span class="new-card-plus">+</span>
+                            </br>
+                            <span class="new-card-add">Add new widget</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="container-fluid history-container p-3 g-0 d-none d-lg-block">
+                    <div class="row">
+                        <div class="col-auto navbar-header-title">History</div>
+                        <div class="col-auto"></div>
+                    </div>
+                    <div class="container-fluid history-category-container pt-3">
+                        <div class="row justify-content-evenly pb-3">
+                            <div class="col-1 text-center history-category-title">Date</div>
+                            <div class="col-1 text-center history-category-title">Time</div>
+                            <div class="col-3 text-center history-category-title">Purpose</div>
+                            <div class="col-2 text-center history-category-title">Counterparty</div>
+                            <div class="col-2 text-center history-category-title">Account</div>
+                            <div class="col-1 text-center history-category-title">Category</div>
+                            <div class="col-1 text-center history-category-title">Amount</div>
+                        </div>
+                    </div>
+                    <div class="container-fluid history-category-container pt-3" id="historyContainer">
+                        <div class="row justify-content-evenly pb-3 not-active" id="historyTransaction">
+                            <div class="col-1 date text-center">23.08.2020</div>
+                            <div class="col-1 time text-center">16:48</div>
+                            <div class="col-3 purpose text-center">Lorem ipsum dolor sit amet, consectetur</div>
+                            <div class="col-2 counterparty text-center">Jerga LTD</div>
+                            <div class="col-2 account text-center">RB VISA ACCount</div>
+                            <div class="col-1 category text-center">Expences</div>
+                            <div class="col-1 amount text-center">- 49.99</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid d-lg-none mobile-widget-bar fixed-bottom justify-content-evenly">
+                    <div class="row">
+                        <a class="col mobile-widget-button btn" href="#" role="button">
+                            <i class="fas fa-wallet"></i>
+                        </a>
+                        <a class="col mobile-widget-button btn" href="#" role="button">
+                            <i class="fas fa-exchange-alt"></i>
+                        </a>
+                        <a class="col mobile-widget-button btn" href="#" role="button">
+                            <i class="fas fa-chart-line"></i>
+                        </a>
+                        <a class="col mobile-widget-button btn" href="#" role="button">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </a>
+                        <a class="col mobile-widget-button btn" href="#" role="button">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="sticky-bottom d-none d-lg-block">
+            <div class="container-fluid g-5">
+                <div class="row justify-content-between pt-3">
+                    <div class="col-auto">
+                        <span class="footer-text">Maveric</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row">
+                            <div class="col-auto">
+                                <span class="footer-text">News</span>
+                            </div>
+                            <div class="col-auto">
+                                <span class="footer-text">About Maveric</span>
+                            </div>
+                            <div class="col-auto">
+                                <span class="footer-text">FAQ</span>
+                            </div>
+                            <div class="col-auto">
+                                <span class="footer-text">Contacts</span>
+                            </div>
+                        </div>
+                        <div class="container-fluid pt-5 pb-2 text-center">
+                            <span>Terms and conditions</span>
+                            <span>Privacy policy</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row">
+                            <div class="col-auto">
+                                <img src="./img/google-play-badge.svg" alt="">
+                            </div>
+                            <div class="col-auto">
+                                <img src="./img/apple-app-store-badge.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div class="col position-absolute d-none d-lg-block top-0 end-0">
+            <a class="btn theme-button" href="#" role="button">
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+        </script>
+    <link rel="stylesheet" href="./slick/slick.css">
+    <link rel="stylesheet" href="./slick/slick-theme.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./slick/slick.min.js"></script>
+    <script src="./script/script.js"></script>
+    <script src="./script/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+    <script src="./script/firebaseInit.js"></script>
+    <script src="./script/auth.js"></script>
+
+
+</body>
+
+</html>
